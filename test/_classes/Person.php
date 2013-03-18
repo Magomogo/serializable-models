@@ -89,16 +89,7 @@ class Person implements PersistedInterface, Serializable
 
     public function serialize()
     {
-        $storedTags = array();
-        foreach ($this->tags as $tag) {
-            $storedTags[] = Storage::get()->save($tag)->id();
-        }
-
-        return serialize(array(
-            'properties' => $this->properties,
-            'creditCard' => Storage::get()->save($this->creditCard)->id(),
-            'tags' => $storedTags
-        ));
+        return serialize($this->serializableState());
     }
 
     public function unserialize($serialized)
@@ -110,5 +101,20 @@ class Person implements PersistedInterface, Serializable
         foreach ($data['tags'] as $tagId) {
             $this->tags[] = Storage::get()->load($tagId);
         }
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+
+    protected function serializableState() {
+        $storedTags = array();
+        foreach ($this->tags as $tag) {
+            $storedTags[] = Storage::get()->save($tag)->id();
+        }
+
+        return array(
+            'properties' => $this->properties,
+            'creditCard' => Storage::get()->save($this->creditCard)->id(),
+            'tags' => $storedTags
+        );
     }
 }

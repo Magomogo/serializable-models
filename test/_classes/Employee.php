@@ -1,9 +1,7 @@
 <?php
 
-
 class Employee extends Person
 {
-    private $id;
     /**
      * @var Company
      */
@@ -25,22 +23,26 @@ class Employee extends Person
         return $this->politeTitle() . ' from ' . $this->company->name();
     }
 
-    public function id()
-    {
-        return $this->id;
-    }
-
-    public function persisted($id)
-    {
-        $this->id = $id;
-    }
-
     public function meta()
     {
         return array_merge(
             parent::meta(),
-            array($this->company->meta())
+            $this->company->meta()
         );
     }
 
+    public function serialize()
+    {
+        $data = $this->serializableState();
+        $data['company'] = $this->company->id();
+
+        return serialize($data);
+    }
+
+    public function unserialize($serialized)
+    {
+        parent::unserialize($serialized);
+        $data = unserialize($serialized);
+        $this->company = Storage::get()->load($data['company']);
+    }
 }

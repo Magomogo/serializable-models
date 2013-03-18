@@ -3,6 +3,10 @@
 class Keymarker implements PersistedInterface
 {
     private $id;
+
+    /**
+     * @var string
+     */
     private $name;
 
     public function __construct($name)

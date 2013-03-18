@@ -67,6 +67,37 @@ class PersistenceTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testEmployeeIsPersists()
+    {
+        $xiag = $this->storage()->save(ObjectMother\Company::xiag());
+        $employee = $this->storage()->save(ObjectMother\Employee::maxim(null, $xiag));
+
+        $this->assertEquals(
+            $employee,
+            $this->storage()->load($employee->id())
+        );
+    }
+
+    public function testCompanyIsPersists()
+    {
+        $xiag = $this->storage()->save(ObjectMother\Company::xiag());
+
+        $this->assertEquals(
+            $xiag,
+            $this->storage()->load($xiag->id())
+        );
+    }
+
+    public function testKeymarkerIsPersists()
+    {
+        $keymarker = $this->storage()->save(ObjectMother\Keymarker::IT());
+
+        $this->assertEquals(
+            $keymarker,
+            $this->storage()->load($keymarker->id())
+        );
+    }
+
 //----------------------------------------------------------------------------------------------------------------------
 
     /**

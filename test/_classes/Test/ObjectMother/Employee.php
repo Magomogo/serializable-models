@@ -6,10 +6,15 @@ use Person\Properties as Properties;
 
 class Employee
 {
-    public static function maxim($id = null)
+    /**
+     * @param null $id
+     * @param null|\Company $company
+     * @return \Employee
+     */
+    public static function maxim($id = null, $company = null)
     {
         return new EmployeeModel(
-            Company::xiag(),
+            $company ?: Company::xiag(),
             new Properties(array(
                 'title' => 'Mr.',
                 'firstName' => 'Maxim',
