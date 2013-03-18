@@ -2,7 +2,6 @@
 namespace Test\ObjectMother;
 
 use Employee as EmployeeModel;
-use Company as CompanyModel;
 
 class Employee
 {

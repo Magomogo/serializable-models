@@ -1,7 +1,8 @@
 <?php
 
-class CreditCard
+class CreditCard implements PersistedInterface
 {
+    private $id;
     private $pan;
     private $paymentSystem;
     private $validTo;
@@ -28,4 +29,13 @@ class CreditCard
         return $this->paymentSystem;
     }
 
+    public function id()
+    {
+        return $this->id;
+    }
+
+    public function persisted($id)
+    {
+        $this->id = $id;
+    }
 }

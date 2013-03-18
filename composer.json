@@ -39,8 +39,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "Magomogo\\Model": ["lib/"],
-            "": ["test/_classes"]
+            "": ["test/_classes", "lib/"]
         }
     }
 }
