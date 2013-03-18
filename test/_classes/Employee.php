@@ -3,6 +3,7 @@
 
 class Employee extends Person
 {
+    private $id;
     /**
      * @var Company
      */
@@ -28,4 +29,13 @@ class Employee extends Person
         return $this->politeTitle() . ' from ' . $this->company->name();
     }
 
+    public function id()
+    {
+        return $this->id;
+    }
+
+    public function persisted($id)
+    {
+        $this->id = $id;
+    }
 }

@@ -31,7 +31,7 @@ class Storage
 
     public function load($id)
     {
-        $row = $this->db->fetchAssoc('SELECt * FROM objects WHERE id = ?', array(intval($id)));
+        $row = $this->db->fetchAssoc('SELECT * FROM objects WHERE id = ?', array(intval($id)));
         if ($row) {
             $obj = unserialize($row['serialized']);
             $obj->persisted($id);

@@ -1,7 +1,9 @@
 <?php
 
-class Person
+class Person implements PersistedInterface
 {
+    private $id;
+
     private $title;
 
     private $firstName;
@@ -74,5 +76,15 @@ class Person
     public function taggedAs()
     {
         return join(', ', $this->tags);
+    }
+
+    public function id()
+    {
+        return $this->id;
+    }
+
+    public function persisted($id)
+    {
+        $this->id = $id;
     }
 }
