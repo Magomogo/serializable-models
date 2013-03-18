@@ -51,11 +51,22 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     private static function person()
     {
-        return new Model('Mr.', 'John', 'Doe', '+7923-117-2801', 'maxim@xiag.ch', TestObj\CreditCard::datatransTesting());
+        return new Model(self::johnDoeProps(), TestObj\CreditCard::datatransTesting());
     }
 
     private static function personWithoutCreditCard()
     {
-        return new Model('Mr.', 'John', 'Doe', '+7923-117-2801', 'maxim@xiag.ch', null);
+        return new Model(self::johnDoeProps(), null);
+    }
+
+    private static function johnDoeProps()
+    {
+        return new Model\Properties(array(
+            'title' => 'Mr.',
+            'firstName' => 'John',
+            'lastName' => 'Doe',
+            'phone' => '+7923-117-2801',
+            'email' => 'maxim@xiag.ch',
+        ));
     }
 }

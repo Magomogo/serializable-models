@@ -26,15 +26,13 @@ class PersistenceTest extends \PHPUnit_Framework_TestCase
         $id = $this->storage()->save(ObjectMother\Person::maxim())->id();
 
         $this->assertEquals(
-            ObjectMother\Person::maxim(1),
+            ObjectMother\Person::maxim('2', '1'),
             $this->storage()->load($id)
         );
     }
 
     public function testPersonAndItsCreditCardAreStoredSeparately()
     {
-        $this->markTestIncomplete('Not implemented');
-        
         $this->storage()->save(ObjectMother\Person::maxim());
 
         $this->assertEquals(
@@ -43,6 +41,29 @@ class PersistenceTest extends \PHPUnit_Framework_TestCase
                 array('id' => 2, 'className' => 'Person'),
             ),
             $this->fixture->db->fetchAll("SELECT id, className FROM objects")
+        );
+    }
+
+    public function testPersonHavingTagsPersists()
+    {
+        $person = ObjectMother\Person::maxim();
+        $person->tag(ObjectMother\Keymarker::friend());
+        $person->tag(ObjectMother\Keymarker::IT());
+        $id = $this->storage()->save($person)->id();
+
+        $this->assertEquals(
+            $person,
+            $this->storage()->load($id)
+        );
+
+        $this->assertEquals(
+            array(
+                array('className' => 'Keymarker'),
+                array('className' => 'Keymarker'),
+                array('className' => 'CreditCard'),
+                array('className' => 'Person'),
+            ),
+            $this->fixture->db->fetchAll("SELECT className FROM objects")
         );
     }
 

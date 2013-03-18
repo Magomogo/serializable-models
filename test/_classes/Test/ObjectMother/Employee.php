@@ -2,13 +2,23 @@
 namespace Test\ObjectMother;
 
 use Employee as EmployeeModel;
+use Person\Properties as Properties;
 
 class Employee
 {
     public static function maxim($id = null)
     {
-        return new EmployeeModel(Company::xiag(), 'Mr.', 'Maxim', 'Gnatenko', '+7923-117-2801', 'maxim@xiag.ch',
-            CreditCard::datatransTesting());
+        return new EmployeeModel(
+            Company::xiag(),
+            new Properties(array(
+                'title' => 'Mr.',
+                'firstName' => 'Maxim',
+                'lastName' => 'Gnatenko',
+                'phone' => '+7923-117-2801',
+                'email' => 'maxim@xiag.ch',
+            )),
+            CreditCard::datatransTesting()
+        );
     }
 
 }

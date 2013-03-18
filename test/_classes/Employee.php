@@ -11,16 +11,12 @@ class Employee extends Person
 
     /**
      * @param Company $company
-     * @param $title
-     * @param $firstName
-     * @param $lastName
-     * @param $phone
-     * @param $email
+     * @param Person\Properties $properties
      * @param CreditCard $cc
      */
-    public function __construct($company, $title, $firstName, $lastName, $phone, $email, $cc)
+    public function __construct($company, $properties, $cc)
     {
-        parent::__construct($title, $firstName, $lastName, $phone, $email, $cc);
+        parent::__construct($properties, $cc);
         $this->company = $company;
     }
 

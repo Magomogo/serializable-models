@@ -1,60 +1,47 @@
 <?php
 
-class Person implements PersistedInterface
+class Person implements PersistedInterface, Serializable
 {
     private $id;
 
-    private $title;
-
-    private $firstName;
-
-    private $lastName;
-
-    private $phone;
-
-    private $email;
+    /**
+     * @var Person\Properties
+     */
+    private $properties;
 
     /**
-     * @var
+     * @var CreditCard
      */
     private $creditCard;
 
     /**
      * @var array()
      */
-    private $tags;
+    private $tags = array();
 
     /**
-     * @param $title
-     * @param $firstName
-     * @param $lastName
-     * @param $phone
-     * @param $email
+     * @param Person\Properties $properties
      * @param CreditCard $cc
      */
-    public function __construct($title, $firstName, $lastName, $phone, $email, $cc)
+    public function __construct($properties, $cc)
     {
-        $this->title = $title;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->phone = $phone;
-        $this->email = $email;
+        $this->properties = $properties;
         $this->creditCard = $cc;
     }
 
     public function politeTitle()
     {
-        return $this->title . ' ' . $this->firstName . ' ' . $this->lastName;
+        return $this->properties->title . ' ' . $this->properties->firstName . ' ' . $this->properties->lastName;
     }
 
     public function contactInfo()
     {
-        return 'Phone: ' . $this->phone . "\n" . 'Email: ' . $this->email;
+        return 'Phone: ' . $this->properties->phone . "\n" . 'Email: ' . $this->properties->email;
     }
 
     public function phoneNumberIsChanged($newNumber)
     {
-        $this->phone = $newNumber;
+        $this->properties->phone = $newNumber;
     }
 
     public function paymentInfo()
@@ -86,5 +73,30 @@ class Person implements PersistedInterface
     public function persisted($id)
     {
         $this->id = $id;
+    }
+
+    public function serialize()
+    {
+        $storedTags = array();
+        foreach ($this->tags as $tag) {
+            $storedTags[] = Storage::get()->save($tag)->id();
+        }
+
+        return serialize(array(
+            'properties' => $this->properties,
+            'creditCard' => Storage::get()->save($this->creditCard)->id(),
+            'tags' => $storedTags
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+        $this->properties = $data['properties'];
+        $this->creditCard = Storage::get()->load($data['creditCard']);
+        $this->tags = array();
+        foreach ($data['tags'] as $tagId) {
+            $this->tags[] = Storage::get()->load($tagId);
+        }
     }
 }

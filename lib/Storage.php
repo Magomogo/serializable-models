@@ -9,6 +9,24 @@ class Storage
      */
     private $db;
 
+    /**
+     * @var self
+     */
+    private static $instance;
+
+    /**
+     * @param self $storage
+     */
+    public static function register($storage)
+    {
+        self::$instance = $storage;
+    }
+
+    public static function get()
+    {
+        return self::$instance;
+    }
+
     public function __construct($db)
     {
         $this->db = $db;
@@ -20,6 +38,8 @@ class Storage
      */
     public function save($object)
     {
+        self::register($this);
+
         if(!is_null($object->id())) {
             $this->db->update('objects', array('serialized' => serialize($object)), array('id' => $object->id()));
         } else {
@@ -31,6 +51,8 @@ class Storage
 
     public function load($id)
     {
+        self::register($this);
+
         $row = $this->db->fetchAssoc('SELECT * FROM objects WHERE id = ?', array(intval($id)));
         if ($row) {
             $obj = unserialize($row['serialized']);
