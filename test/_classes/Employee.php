@@ -23,14 +23,6 @@ class Employee extends Person
         return $this->politeTitle() . ' from ' . $this->company->name();
     }
 
-    public function meta()
-    {
-        return array_merge(
-            parent::meta(),
-            $this->company->meta()
-        );
-    }
-
     public function serialize()
     {
         $data = $this->serializableState();
