@@ -34,13 +34,15 @@ class Storage
 
     /**
      * @param PersistedInterface $object
+     * @param null|integer $ref
      * @return \PersistedInterface
      */
-    public function save($object)
+    public function save($object, $ref = null)
     {
         self::register($this);
 
         $data = array(
+            'ref' => $ref,
             'className' => get_class($object),
             'serialized' => serialize($object),
             'meta' => join(',', $object->meta())

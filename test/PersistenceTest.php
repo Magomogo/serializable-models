@@ -70,7 +70,7 @@ class PersistenceTest extends \PHPUnit_Framework_TestCase
     public function testEmployeeIsPersists()
     {
         $xiag = $this->storage()->save(ObjectMother\Company::xiag());
-        $employee = $this->storage()->save(ObjectMother\Employee::maxim(null, $xiag));
+        $employee = $this->storage()->save(ObjectMother\Employee::maxim(null, $xiag), $xiag->id());
 
         $this->assertEquals(
             $employee,
