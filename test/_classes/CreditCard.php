@@ -38,4 +38,10 @@ class CreditCard implements PersistedInterface
     {
         $this->id = $id;
     }
+
+    public function meta()
+    {
+        return array($this->paymentSystem);
+    }
+
 }

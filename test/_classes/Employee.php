@@ -34,4 +34,13 @@ class Employee extends Person
     {
         $this->id = $id;
     }
+
+    public function meta()
+    {
+        return array_merge(
+            parent::meta(),
+            array($this->company->meta())
+        );
+    }
+
 }

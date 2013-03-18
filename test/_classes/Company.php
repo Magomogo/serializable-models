@@ -25,4 +25,9 @@ class Company implements PersistedInterface
     {
         $this->id = $id;
     }
+
+    public function meta()
+    {
+        return array($this->name);
+    }
 }

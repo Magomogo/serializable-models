@@ -24,4 +24,10 @@ class Keymarker implements PersistedInterface
     {
         $this->id = $id;
     }
+
+    public function meta()
+    {
+        return array($this->name);
+    }
+
 }

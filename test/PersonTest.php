@@ -47,6 +47,18 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Friend, IT', $person->taggedAs());
     }
 
+    public function testMetaInfoHasAllPersonProperties()
+    {
+        $this->assertThat(
+            self::person()->meta(),
+            $this->logicalAnd(
+                $this->contains('John'),
+                $this->contains('+7923-117-2801'),
+                $this->contains('maxim@xiag.ch')
+            )
+        );
+    }
+
 //----------------------------------------------------------------------------------------------------------------------
 
     private static function person()

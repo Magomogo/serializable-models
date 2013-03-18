@@ -40,10 +40,16 @@ class Storage
     {
         self::register($this);
 
+        $data = array(
+            'className' => get_class($object),
+            'serialized' => serialize($object),
+            'meta' => join(',', $object->meta())
+        );
+
         if(!is_null($object->id())) {
-            $this->db->update('objects', array('serialized' => serialize($object)), array('id' => $object->id()));
+            $this->db->update('objects', $data, array('id' => $object->id()));
         } else {
-            $this->db->insert('objects', array('className' => get_class($object), 'serialized' => serialize($object)));
+            $this->db->insert('objects', $data);
             $object->persisted($this->db->lastInsertId());
         }
         return $object;

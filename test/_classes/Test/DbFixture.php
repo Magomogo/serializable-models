@@ -39,7 +39,8 @@ class DbFixture
 CREATE TABLE objects (
   id INTEGER CONSTRAINT pk_objects PRIMARY KEY AUTOINCREMENT,
   className VARCHAR(1024),
-  serialized TEXT
+  serialized TEXT,
+  meta TEXT
 );
 
 SQL
