@@ -1,4 +1,4 @@
 serializable-models
 ===================
 
-Models persictency, achieved by serialization
+Models persistency achieved by serialization
