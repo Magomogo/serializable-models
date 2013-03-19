@@ -1,5 +1,5 @@
 <?php
-namespace recentVersions\v0_1;
+namespace previousVersions;
 
 class CreditCard implements \PersistedInterface
 {

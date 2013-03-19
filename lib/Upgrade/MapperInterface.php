@@ -5,8 +5,8 @@ namespace Upgrade;
 interface MapperInterface 
 {
     /**
-     * @param object $previousVersion
-     * @return object $currentVersion
+     * @param \PersistedInterface $previousVersion
+     * @return \PersistedInterface $currentVersion
      */
     public function map($previousVersion);
 }

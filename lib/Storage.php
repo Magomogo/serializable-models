@@ -57,6 +57,10 @@ class Storage
         return $object;
     }
 
+    /**
+     * @param integer $id
+     * @return \PersistedInterface|null
+     */
     public function load($id)
     {
         self::register($this);
@@ -68,5 +72,14 @@ class Storage
             return $obj;
         }
         return null;
+    }
+
+    /**
+     * @param string $className
+     * @return \Doctrine\DBAL\Driver\Statement
+     */
+    public function querySerializedData($className)
+    {
+        return $this->db->executeQuery('SELECT id, serialized FROM objects WHERE className = ?', array($className));
     }
 }
