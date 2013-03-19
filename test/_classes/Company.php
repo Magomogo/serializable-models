@@ -30,4 +30,16 @@ class Company implements PersistedInterface
     {
         return array($this->name);
     }
+
+    public function serialize()
+    {
+        return serialize(array('name' => $this->name));
+    }
+
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+        $this->name = $data['name'];
+    }
+
 }

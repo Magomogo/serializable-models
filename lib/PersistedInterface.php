@@ -1,6 +1,6 @@
 <?php
 
-interface PersistedInterface
+interface PersistedInterface extends Serializable
 {
     /**
      * @return integer

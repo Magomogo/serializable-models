@@ -44,4 +44,19 @@ class CreditCard implements PersistedInterface
         return array($this->paymentSystem);
     }
 
+    public function serialize()
+    {
+        return serialize(
+            array('pan' => $this->pan, 'paymentSystem' => $this->paymentSystem, 'validTo' => $this->validTo)
+        );
+    }
+
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+        $this->pan = $data['pan'];
+        $this->paymentSystem = $data['paymentSystem'];
+        $this->validTo = $data['validTo'];
+    }
+
 }

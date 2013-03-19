@@ -1,6 +1,6 @@
 <?php
 
-class Person implements PersistedInterface, Serializable
+class Person implements PersistedInterface
 {
     private $id;
 
