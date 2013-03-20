@@ -92,11 +92,11 @@ class Storage
 
     private static function extractJsonPart($phpSerializedString)
     {
-        return substr($phpSerializedString, strpos($phpSerializedString, ':{') + 1);
+        return substr($phpSerializedString, strpos($phpSerializedString, ':{') + 2, -1);
     }
 
     private static function appendPhpSerializationPrefix($className, $json)
     {
-        return 'C:' . strlen($className) . ':"' . $className . '":' . (mb_strlen($json) - 2) . ':' . $json;
+        return 'C:' . strlen($className) . ':"' . $className . '":' . (mb_strlen($json)) . ':{' . $json . '}';
     }
 }

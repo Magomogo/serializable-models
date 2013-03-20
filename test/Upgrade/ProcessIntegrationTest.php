@@ -39,7 +39,7 @@ class ProcessIntegrationTest extends \PHPUnit_Framework_TestCase
     private static function serializedCreditCardWithoutAggregatedProperties()
     {
         return <<<'STRING'
-{{"pan":"9500000000000001","paymentSystem":"VISA","validTo":"2015-12-31T00:00:00+07:00"}}
+{"pan":"9500000000000001","paymentSystem":"VISA","validTo":"2015-12-31T00:00:00+07:00"}
 STRING;
     }
 
