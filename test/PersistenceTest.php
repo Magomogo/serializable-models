@@ -25,8 +25,6 @@ class PersistenceTest extends \PHPUnit_Framework_TestCase
     {
         $id = $this->storage()->save(ObjectMother\Person::maxim())->id();
 
-        print_r($this->fixture->db->fetchAll("SELECT * FROM objects"));
-
         $this->assertEquals(
             ObjectMother\Person::maxim('2', '1'),
             $this->storage()->load($id)

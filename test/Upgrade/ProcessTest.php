@@ -46,21 +46,6 @@ class ProcessTest extends \PHPUnit_Framework_TestCase {
         self::process($mapper)->doUpgrade($storage);
     }
 
-    /*
-        public function testTransformsPreviousRepresentationOfObjectIntoCurrent()
-        {
-            $this->markTestIncomplete('Not implemented');
-
-            $process = new Process();
-
-            $this->assertEquals(
-                self::serializedCreditCardCurrentVersion(),
-                $process->doUpgrade(
-                    self::serializedCreditCardWithoutAggregatedProperties()
-                )
-            );
-        }*/
-
 //----------------------------------------------------------------------------------------------------------------------
 
     /**
@@ -80,37 +65,13 @@ class ProcessTest extends \PHPUnit_Framework_TestCase {
         $storage = m::mock();
         $storage->shouldIgnoreMissing();
         $storage->shouldReceive('querySerializedData')->with('CreditCard')->andReturn(
-            m::mock(
-                '',
-                function ($mock) {
-                    $mock->shouldReceive('fetch')->andReturn(
-                        array('id' => 1, 'serialized' => 'O:10:"CreditCard":0:{}'),
-                        false
-                    );
-                }
-            )
+            array(1 => 'O:10:"CreditCard":0:{}')
         );
         $storage->shouldReceive('querySerializedData')->with('CreditCard\\Properties')->andReturn(
-            m::mock(
-                '',
-                function ($mock) {
-                    $mock->shouldReceive('fetch')->andReturn(
-                        array('id' => 2, 'serialized' => 'O:21:"CreditCard\Properties":0:{}'),
-                        false
-                    );
-                }
-            )
+            array(2 => 'O:21:"CreditCard\Properties":0:{}')
         );
         $storage->shouldReceive('querySerializedData')->with('Job\\Record\\Single')->andReturn(
-            m::mock(
-                '',
-                function ($mock) {
-                    $mock->shouldReceive('fetch')->andReturn(
-                        array('id' => 3, 'serialized' => 'O:17:"Job\Record\Single":0:{}'),
-                        false
-                    );
-                }
-            )
+            array(3 => 'O:17:"Job\Record\Single":0:{}')
         );
         return $storage;
     }
@@ -152,10 +113,5 @@ class FakePersistedObject implements \PersistedInterface
     public function persisted($id)
     {
         // TODO: Implement persisted() method.
-    }
-
-    public function meta()
-    {
-        // TODO: Implement meta() method.
     }
 }

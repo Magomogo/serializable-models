@@ -12,7 +12,7 @@ class CreditCard
             array(
                 'pan' => '9500000000000001',
                 'paymentSystem' => 'VISA',
-                'validTo' => new \DateTime('31-12-2015')
+                'validTo' => new \DateTime('2015-12-31T00:00:00+07:00')
             )
         ));
         if ($id) {

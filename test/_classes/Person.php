@@ -75,18 +75,6 @@ class Person implements PersistedInterface
         $this->id = $id;
     }
 
-    public function meta()
-    {
-        $meta = array_merge(
-            (array)$this->properties,
-            $this->creditCard->meta()
-        );
-        foreach ($this->tags as $tag) {
-            $meta = array_merge($meta, $tag->meta());
-        }
-        return $meta;
-    }
-
     public function serialize()
     {
         return json_encode($this->serializableState());

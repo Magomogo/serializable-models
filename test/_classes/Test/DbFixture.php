@@ -40,8 +40,7 @@ CREATE TABLE objects (
   id INTEGER CONSTRAINT pk_objects PRIMARY KEY AUTOINCREMENT,
   ref INTEGER,
   className VARCHAR(1024),
-  serialized TEXT,
-  meta TEXT
+  serialized TEXT
 );
 
 SQL

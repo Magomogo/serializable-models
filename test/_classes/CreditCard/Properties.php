@@ -2,12 +2,15 @@
 
 namespace CreditCard;
 
-class Properties 
+class Properties implements \JsonSerializable
 {
     public $pan;
 
     public $paymentSystem;
 
+    /**
+     * @var \DateTime
+     */
     public $validTo;
 
     public function __construct($properties)
@@ -22,4 +25,13 @@ class Properties
         trigger_error('Undefined property: ' . $name, E_USER_NOTICE);
     }
 
+    function jsonSerialize()
+    {
+        return array_merge(
+            get_object_vars($this),
+            array(
+                'validTo' => $this->validTo ? $this->validTo->format('c') : null
+            )
+        );
+    }
 }

@@ -31,15 +31,14 @@ class Process
             $className = str_replace('/', '\\', substr($relativePath, 2, -4));
 
 
-            $statement = $storage->querySerializedData($className);
-            while ($row = $statement->fetch()) {
+            foreach ($storage->querySerializedData($className) as $id => $serializedData) {
 
                 $previousVersionInstance = $this->instantiatePreviousVersion(
-                    $row['serialized'], $this->namespace . '\\' . $className
+                    $serializedData, $this->namespace . '\\' . $className
                 );
 
                 $currentVersionInstance = $this->mapper->map($previousVersionInstance);
-                $currentVersionInstance->persisted($row['id']);
+                $currentVersionInstance->persisted($id);
                 $storage->save($currentVersionInstance);
             }
         }

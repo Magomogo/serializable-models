@@ -40,24 +40,19 @@ class CreditCard implements \PersistedInterface
         $this->id = $id;
     }
 
-    public function meta()
-    {
-        return array($this->paymentSystem);
-    }
-
     public function serialize()
     {
-        return serialize(
+        return json_encode(
             array('pan' => $this->pan, 'paymentSystem' => $this->paymentSystem, 'validTo' => $this->validTo)
         );
     }
 
     public function unserialize($serialized)
     {
-        $data = unserialize($serialized);
-        $this->pan = $data['pan'];
-        $this->paymentSystem = $data['paymentSystem'];
-        $this->validTo = $data['validTo'];
+        $data = json_decode($serialized);
+        $this->pan = $data->pan;
+        $this->paymentSystem = $data->paymentSystem;
+        $this->validTo = new \Datetime($data->validTo);
     }
 
 }

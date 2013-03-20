@@ -44,8 +44,7 @@ class Storage
         $data = array(
             'ref' => $ref,
             'className' => get_class($object),
-            'serialized' => serialize($object),
-            'meta' => join(',', $object->meta())
+            'serialized' => self::extractJsonPart(serialize($object)),
         );
 
         if(!is_null($object->id())) {
@@ -67,7 +66,7 @@ class Storage
 
         $row = $this->db->fetchAssoc('SELECT * FROM objects WHERE id = ?', array(intval($id)));
         if ($row) {
-            $obj = unserialize($row['serialized']);
+            $obj = unserialize(self::appendPhpSerializationPrefix($row['className'], $row['serialized']));
             $obj->persisted($id);
             return $obj;
         }
@@ -76,10 +75,28 @@ class Storage
 
     /**
      * @param string $className
-     * @return \Doctrine\DBAL\Driver\Statement
+     * @return array id => serialized data
      */
     public function querySerializedData($className)
     {
-        return $this->db->executeQuery('SELECT id, serialized FROM objects WHERE className = ?', array($className));
+        $stmt = $this->db->executeQuery('SELECT id, className, serialized FROM objects WHERE className = ?', array($className));
+
+        $return = array();
+        while($row = $stmt->fetch()) {
+            $return[$row['id']] = self::appendPhpSerializationPrefix($row['className'], $row['serialized']);
+        }
+        return $return;
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+
+    private static function extractJsonPart($phpSerializedString)
+    {
+        return substr($phpSerializedString, strpos($phpSerializedString, ':{') + 1);
+    }
+
+    private static function appendPhpSerializationPrefix($className, $json)
+    {
+        return 'C:' . strlen($className) . ':"' . $className . '":' . (mb_strlen($json) - 2) . ':' . $json;
     }
 }

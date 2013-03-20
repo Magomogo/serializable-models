@@ -12,9 +12,4 @@ interface PersistedInterface extends Serializable
      * @return self
      */
     public function persisted($id);
-
-    /**
-     * @return array key words
-     */
-    public function meta();
 }

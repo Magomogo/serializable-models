@@ -29,11 +29,6 @@ class Keymarker implements PersistedInterface
         $this->id = $id;
     }
 
-    public function meta()
-    {
-        return array($this->name);
-    }
-
     public function serialize()
     {
         return json_encode(array('name' => $this->name));

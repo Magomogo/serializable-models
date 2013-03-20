@@ -30,26 +30,23 @@ class ProcessIntegrationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             array(
-                array(
-                    'id' => $id,
-                    'serialized' => self::serializedCreditCardCurrentVersion()
-                )
+                $id => self::serializedCreditCardCurrentVersion()
             ),
-            $storage->querySerializedData('CreditCard')->fetchAll()
+            $storage->querySerializedData('CreditCard')
         );
     }
 
     private static function serializedCreditCardWithoutAggregatedProperties()
     {
         return <<<'STRING'
-C:10:"CreditCard":207:{a:3:{s:3:"pan";s:16:"9500000000000001";s:13:"paymentSystem";s:4:"VISA";s:7:"validTo";O:8:"DateTime":3:{s:4:"date";s:19:"2015-12-31 00:00:00";s:13:"timezone_type";i:3;s:8:"timezone";s:16:"Asia/Novosibirsk";}}}
+{{"pan":"9500000000000001","paymentSystem":"VISA","validTo":"2015-12-31T00:00:00+07:00"}}
 STRING;
     }
 
     private static function serializedCreditCardCurrentVersion()
     {
         return <<<'STRING'
-C:10:"CreditCard":258:{a:1:{s:10:"properties";O:21:"CreditCard\Properties":3:{s:3:"pan";s:16:"9500000000000001";s:13:"paymentSystem";s:4:"VISA";s:7:"validTo";O:8:"DateTime":3:{s:4:"date";s:19:"2015-12-31 00:00:00";s:13:"timezone_type";i:3;s:8:"timezone";s:16:"Asia/Novosibirsk";}}}}
+C:10:"CreditCard":102:{{"properties":{"pan":"9500000000000001","paymentSystem":"VISA","validTo":"2015-12-31T00:00:00+07:00"}}}
 STRING;
     }
 

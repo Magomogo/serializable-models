@@ -33,11 +33,6 @@ class CreditCard implements PersistedInterface
         $this->id = $id;
     }
 
-    public function meta()
-    {
-        return array($this->properties->paymentSystem);
-    }
-
     public function serialize()
     {
         return json_encode(
@@ -48,6 +43,7 @@ class CreditCard implements PersistedInterface
     public function unserialize($serialized)
     {
         $data = json_decode($serialized);
+        $data->properties->validTo = $data->properties->validTo ? new \DateTime($data->properties->validTo) : null;
         $this->properties = new CreditCard\Properties($data->properties);
     }
 
