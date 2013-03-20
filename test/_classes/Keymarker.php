@@ -36,12 +36,11 @@ class Keymarker implements PersistedInterface
 
     public function serialize()
     {
-        return serialize(array('name' => $this->name));
+        return json_encode(array('name' => $this->name));
     }
 
     public function unserialize($serialized)
     {
-        $data = unserialize($serialized);
-        $this->name = $data['name'];
+        $this->name = json_decode($serialized)->name;
     }
 }

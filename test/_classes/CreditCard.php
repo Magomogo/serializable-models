@@ -40,15 +40,15 @@ class CreditCard implements PersistedInterface
 
     public function serialize()
     {
-        return serialize(
+        return json_encode(
             array('properties' => $this->properties)
         );
     }
 
     public function unserialize($serialized)
     {
-        $data = unserialize($serialized);
-        $this->properties = $data['properties'];
+        $data = json_decode($serialized);
+        $this->properties = new CreditCard\Properties($data->properties);
     }
 
 }

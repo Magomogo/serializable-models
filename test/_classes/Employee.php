@@ -28,13 +28,13 @@ class Employee extends Person
         $data = $this->serializableState();
         $data['company'] = $this->company->id();
 
-        return serialize($data);
+        return json_encode($data);
     }
 
     public function unserialize($serialized)
     {
         parent::unserialize($serialized);
-        $data = unserialize($serialized);
-        $this->company = Storage::get()->load($data['company']);
+        $data = json_decode($serialized);
+        $this->company = Storage::get()->load($data->company);
     }
 }

@@ -89,16 +89,16 @@ class Person implements PersistedInterface
 
     public function serialize()
     {
-        return serialize($this->serializableState());
+        return json_encode($this->serializableState());
     }
 
     public function unserialize($serialized)
     {
-        $data = unserialize($serialized);
-        $this->properties = $data['properties'];
-        $this->creditCard = Storage::get()->load($data['creditCard']);
+        $data = json_decode($serialized);
+        $this->properties = new Person\Properties($data->properties);
+        $this->creditCard = Storage::get()->load($data->creditCard);
         $this->tags = array();
-        foreach ($data['tags'] as $tagId) {
+        foreach ($data->tags as $tagId) {
             $this->tags[] = Storage::get()->load($tagId);
         }
     }
