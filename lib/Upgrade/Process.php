@@ -67,11 +67,10 @@ class Process
      */
     private function instantiatePreviousVersion($serializedObject, $className)
     {
-        return unserialize(sprintf(
-                'O:%d:"%s"%s',
-                strlen($className),
-                $className,
-                strstr(strstr($serializedObject, '"'), ':')
+        return unserialize(preg_replace(
+                '/^([OC]):\d+:"[^"]+/',
+                '$1:' . strlen($className) . ':"' . $className,
+                $serializedObject
             ));
     }
 
